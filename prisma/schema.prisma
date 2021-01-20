@@ -14,14 +14,14 @@ model User {
   id  Int @id @default(autoincrement())
   name String
   email String @unique
-  passord String 
+  password String 
   todos Todo[]
 }
 
 model Todo {
   id  Int @id @default(autoincrement())
   name String 
-  done Boolean 
+  done Boolean
   userId Int
   user User @relation(fields: [userId], references: [id])
 }
