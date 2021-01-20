@@ -4,6 +4,11 @@
   "main": "index.js",
   "author": "Lucas Duarte <lucasdrtaraujo@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/server.js",
+    "dev": "ts-node-dev src/server.ts"
+  },
   "devDependencies": {
     "@prisma/cli": "2.14.0",
     "@types/express": "^4.17.11",
