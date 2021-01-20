@@ -43,6 +43,29 @@ export class TodosController {
     }
   }
 
+  public async listUncompletedTodos(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const decoded = Object.values(req.decoded);
+
+      const todos = await prisma.todo.findMany({
+        where: {
+          userId: decoded[0],
+          done: false,
+        },
+      });
+
+      res.status(200).send(todos);
+    } catch (error) {
+      res.status(400).send({
+        code: 400,
+        message: error.message,
+      });
+    }
+  }
+
   public async create(req: Request, res: Response): Promise<void> {
     try {
       const { name } = req.body;
