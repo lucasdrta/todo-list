@@ -46,4 +46,43 @@ export class TodosController {
       });
     }
   }
+
+  public async update(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+
+      const todo = await prisma.todo.findUnique({
+        where: { id: Number(id) },
+      });
+
+      if (todo.done === false) {
+        const todo = await prisma.todo.update({
+          data: {
+            done: true,
+          },
+          where: {
+            id: Number(id),
+          },
+        });
+
+        res.status(200).send(todo);
+      } else if (todo.done === true) {
+        const todo = await prisma.todo.update({
+          data: {
+            done: false,
+          },
+          where: {
+            id: Number(id),
+          },
+        });
+
+        res.status(200).send(todo);
+      }
+    } catch (error) {
+      res.status(400).send({
+        code: 400,
+        message: error.message,
+      });
+    }
+  }
 }
