@@ -7,8 +7,9 @@ export class TodosController {
   public async create(req: Request, res: Response): Promise<void> {
     try {
       const { name } = req.body;
+      const decoded = Object.values(req.decoded);
 
-      const user = await prisma.user.findFirst({ where: { id: 1 } });
+      const user = await prisma.user.findFirst({ where: { id: decoded[0] } });
 
       const todo = await prisma.todo.create({
         data: {
